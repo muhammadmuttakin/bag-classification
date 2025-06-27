@@ -1,45 +1,100 @@
-# Dokumentasi Implementasi VGG16 dengan Dataset 15.000 Gambar
+# 🧠📸 Dokumentasi Implementasi VGG16 dengan Dataset 15.000 Gambar
 
-## Deskripsi
+![Model](https://img.shields.io/badge/Model-VGG16-blue.svg)
+![Dataset](https://img.shields.io/badge/Dataset-15.000%20Gambar-lightgrey.svg)
+![Split](https://img.shields.io/badge/Train%2FVal%2FTest-80%2F10%2F10-green.svg)
+![Framework](https://img.shields.io/badge/Framework-Keras%20%2B%20TensorFlow-orange.svg)
 
-Pada implementasi ini, kita menggunakan model **VGG16** untuk melakukan klasifikasi gambar. Dataset yang digunakan terdiri dari 15.000 gambar yang dibagi menjadi tiga bagian utama: **Training (80%)**, **Validation (10%)**, dan **Test (10%)**. Pembagian dataset ini bertujuan untuk memastikan model dapat belajar dengan baik dan dapat dievaluasi pada data yang tidak terlihat sebelumnya.
+---
 
-## Langkah-langkah Implementasi
+## 📝 Deskripsi
 
-### 1. Persiapan Dataset
+Implementasi ini menggunakan model **VGG16** untuk tugas **klasifikasi gambar**. Dataset terdiri dari **15.000 gambar**, yang dibagi menjadi:
 
-Dataset harus disusun dalam tiga direktori utama yang mewakili masing-masing bagian: training, validation, dan testing. Setiap folder ini berisi subfolder yang sesuai dengan kelas gambar dalam dataset. Struktur direktori yang diinginkan adalah sebagai berikut:
+- **Training**: 80%
+- **Validation**: 10%
+- **Testing**: 10%
+
+Pembagian ini bertujuan untuk memastikan model dapat belajar dengan baik dan dievaluasi pada data yang belum pernah dilihat sebelumnya.
+
+---
+
+## ⚙️ Langkah-langkah Implementasi
+
+### 1. 🗂️ Persiapan Dataset
+
+Dataset harus disusun dalam tiga direktori utama:
+
+dataset/
+├── train/
+│ ├── class1/
+│ ├── class2/
+│ └── ...
+├── validation/
+│ ├── class1/
+│ ├── class2/
+│ └── ...
+└── test/
+├── class1/
+├── class2/
+└── ...
 
 
-Pastikan setiap folder berisi gambar yang telah dikelompokkan sesuai dengan kelasnya.
+> 📌 *Pastikan setiap folder berisi gambar yang telah dikelompokkan sesuai dengan kelasnya.*
 
-### 2. Preprocessing Data
+---
 
-Untuk mempersiapkan data sebelum digunakan pada model VGG16, kita menggunakan **ImageDataGenerator** dari Keras. Preprocessing data ini meliputi:
+### 2. 🧼 Preprocessing Data
 
-- **Normalisasi**: Semua gambar akan dinormalisasi dengan cara membagi nilai pixel dengan 255 (rescale), yang mengubah nilai pixel menjadi rentang [0, 1].
-- **Augmentasi Data**: Augmentasi data dilakukan pada data training untuk meningkatkan variasi data yang digunakan dalam pelatihan. Augmentasi ini dapat mencakup rotasi, pergeseran, zoom, dan flipping horizontal. Hal ini membantu model dalam generalisasi yang lebih baik terhadap data baru.
-- **Validasi dan Test**: Data validasi dan test hanya dinormalisasi tanpa augmentasi karena tujuannya adalah untuk mengevaluasi kinerja model pada data yang tidak dilatih.
+Gunakan `ImageDataGenerator` dari **Keras** untuk preprocessing:
 
-### 3. Membuat Data Generators
+- **Normalisasi**: Semua gambar dinormalisasi ke [0, 1] (`rescale=1./255`).
+- **Augmentasi Data**: Untuk data training saja (rotasi, pergeseran, zoom, flipping horizontal).
+- **Validasi dan Test**: Hanya normalisasi, tanpa augmentasi.
 
-Setelah melakukan preprocessing, langkah selanjutnya adalah membuat **data generators** untuk masing-masing bagian dataset (training, validation, dan testing). Data generators ini bertanggung jawab untuk:
+---
 
-- Memuat gambar dari direktori yang telah ditentukan.
-- Mengubah ukuran gambar agar sesuai dengan ukuran input yang diinginkan oleh model (misalnya 224x224 untuk VGG16).
-- Menghasilkan batch data yang siap untuk diproses oleh model.
-- Menyediakan data dalam format yang sesuai dengan mode klasifikasi yang dipilih, yaitu **categorical** untuk klasifikasi multi-kelas.
+### 3. 🔁 Membuat Data Generators
 
-### 4. Pembagian Dataset
+Data generators bertugas untuk:
 
-Dataset akan dibagi menjadi tiga bagian dengan proporsi sebagai berikut:
-- **80% untuk data training**: Digunakan untuk melatih model.
-- **10% untuk data validation**: Digunakan untuk memantau kinerja model selama pelatihan dan melakukan tuning hyperparameter.
-- **10% untuk data testing**: Digunakan untuk evaluasi akhir model setelah pelatihan selesai.
+- Memuat gambar dari direktori.
+- Mengubah ukuran gambar menjadi **224x224** (ukuran input standar untuk VGG16).
+- Menghasilkan batch gambar secara efisien.
+- Menyesuaikan format data ke **categorical** (klasifikasi multi-kelas).
 
-### 5. Penggunaan Data Generators dalam Model
+---
 
-Setelah generator dibuat, mereka akan digunakan dalam proses pelatihan dan evaluasi model. Generator akan menyediakan data secara batch, memastikan penggunaan memori yang efisien dan memungkinkan pelatihan model dengan ukuran dataset yang besar.
+### 4. 📊 Pembagian Dataset
 
-Dengan pendekatan ini, model dapat dilatih dan dievaluasi dengan cara yang efisien dan efektif, memastikan hasil yang optimal pada data yang belum pernah dilihat sebelumnya.
+| Jenis Data | Persentase | Fungsi                        |
+|------------|------------|-------------------------------|
+| Training   | 80%        | Melatih model                 |
+| Validation | 10%        | Tuning dan pemantauan         |
+| Testing    | 10%        | Evaluasi akhir                |
 
+---
+
+### 5. 🧪 Penggunaan Generator pada Model
+
+Generator digunakan saat proses:
+
+- **Pelatihan** dengan `model.fit(...)`
+- **Validasi** otomatis saat pelatihan
+- **Evaluasi akhir** dengan `model.evaluate(...)`
+
+Penggunaan generator memberikan keuntungan:
+
+- Efisiensi memori.
+- Dukungan untuk dataset berukuran besar.
+- Data dibaca secara batch dan real-time.
+
+---
+
+## ✅ Kesimpulan
+
+Dengan pendekatan ini, model **VGG16** dapat dilatih dan diuji secara **optimal**, efisien, dan siap untuk digunakan dalam skenario klasifikasi gambar berskala besar.
+
+---
+
+> 🚀 *Selanjutnya, model dapat di-save menggunakan `model.save()` dan di-deploy untuk prediksi real-time atau integrasi aplikasi.*
