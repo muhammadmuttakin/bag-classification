@@ -24,7 +24,7 @@ Pembagian ini bertujuan untuk memastikan model dapat belajar dengan baik dan die
 ### 1. 🗂️ Persiapan Dataset
 
 Dataset harus disusun dalam tiga direktori utama:
-
+```
 dataset/
 ├── train/
 │   ├── class1/
@@ -38,7 +38,7 @@ dataset/
     ├── class1/
     ├── class2/
     └── ...
-
+```
 
 
 > 📌 *Pastikan setiap folder berisi gambar yang telah dikelompokkan sesuai dengan kelasnya.*
