@@ -27,17 +27,18 @@ Dataset harus disusun dalam tiga direktori utama:
 
 dataset/
 ├── train/
-│ ├── class1/
-│ ├── class2/
-│ └── ...
+│   ├── class1/
+│   ├── class2/
+│   └── ...
 ├── validation/
-│ ├── class1/
-│ ├── class2/
-│ └── ...
+│   ├── class1/
+│   ├── class2/
+│   └── ...
 └── test/
-├── class1/
-├── class2/
-└── ...
+    ├── class1/
+    ├── class2/
+    └── ...
+
 
 
 > 📌 *Pastikan setiap folder berisi gambar yang telah dikelompokkan sesuai dengan kelasnya.*
